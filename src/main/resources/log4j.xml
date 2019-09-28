@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration>
+
+    <!-- 将日志信息输出到控制台 -->
+    <appender name="log.console" class="org.apache.log4j.ConsoleAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss,SSS} %5p (%C:%M) - %m%n" />
+        </layout>
+        <!--过滤器设置输出的级别-->
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="levelMin" value="debug" />
+            <param name="levelMax" value="debug" />
+            <param name="AcceptOnMatch" value="true" />
+        </filter>
+    </appender>
+
+    <!-- 将日志信息输出到文件 -->
+    <appender name="log.file" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="File" value="d:\\log4j\\log4j.log" />
+        <param name="DatePattern" value=".yyyy-MM-dd" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss,SSS} %5p (%C:%M) - %m%n" />
+        </layout>
+    </appender>
+
+    <!--
+        additivity="false"  如果触发该数据源，日志打印不会向其它数据源传播
+        additivity="true"   如果触发该数据源，日志打印会向其它数据源传播
+     -->
+    <logger name="com" additivity="false">
+        <level value="debug"/>
+        <appender-ref ref="log.console"/>
+        <appender-ref ref="log.file"/>
+    </logger>
+
+    <!-- 根logger的设置-->
+    <root>
+        <level value ="error"/>
+        <appender-ref ref="log.console"/>
+        <appender-ref ref="log.file"/>
+    </root>
+
+</log4j:configuration>
