@@ -9,7 +9,7 @@ import com.hpy.pojo.User;
  * Description: <描述>
  */
 public interface UserService {
-    ResponseResult<User> login(String username, String password);
+    ResponseResult login(String username, String password);
 
     ResponseResult register(User user);
 
@@ -23,7 +23,9 @@ public interface UserService {
 
     ResponseResult resetPassword(User user, String passwordOld, String passwordNew);
 
-    ResponseResult<User> updateInformation(User user);
+    ResponseResult updateInformation(User user);
 
-    ResponseResult<User> getInformation(Integer id);
+    ResponseResult getInformation(Integer id);
+
+    ResponseResult checkAdmin(User user);
 }

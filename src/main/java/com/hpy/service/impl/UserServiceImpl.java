@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
     private PasswordService passwordService;
 
     @Override
-    public ResponseResult<User> login(String username, String password) {
+    public ResponseResult login(String username, String password) {
         User user = userMapper.selectByUsername(username);
         if (user != null) {
             // 密码加密再进行匹配
@@ -168,7 +168,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public ResponseResult<User> updateInformation(User user) {
+    public ResponseResult updateInformation(User user) {
         // 校验邮箱
         int resultCount = userMapper.checkEmailByUserId(user.getEmail(), user.getId());
         if (resultCount > 0) {
@@ -190,13 +190,26 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResponseResult<User> getInformation(Integer id) {
+    public ResponseResult getInformation(Integer id) {
         User user = userMapper.selectByPrimaryKey(id);
         if (user == null) {
             return ResponseResult.createByError("用户信息获取失败");
         }
         user.setPassword(StringUtils.EMPTY);
         return ResponseResult.createBySuccess(user);
+    }
+
+    /**
+     * 判断是否为管理员
+     */
+    @Override
+    public ResponseResult checkAdmin(User user) {
+        if (user != null) {
+            if (Const.Role.ROLE_ADMIN == user.getRole()) {
+                return ResponseResult.createBySuccess();
+            }
+        }
+        return ResponseResult.createByError("权限不足");
     }
 
 

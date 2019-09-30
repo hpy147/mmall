@@ -49,16 +49,16 @@ public class ResponseResult<T> implements Serializable {
     /**
      * 成功的响应
      */
-    public static <T> ResponseResult<T> createBySuccess() {
-        return new ResponseResult<>(ResponseCode.SUCCESS.getCode());
+    public static ResponseResult createBySuccess() {
+        return new ResponseResult(ResponseCode.SUCCESS.getCode());
     }
 
     public static <T> ResponseResult<T> createBySuccess(T data) {
         return new ResponseResult<>(ResponseCode.SUCCESS.getCode(), data);
     }
 
-    public static <T> ResponseResult<T> createBySuccessMessage(String msg) {
-        return new ResponseResult<>(ResponseCode.SUCCESS.getCode(), msg);
+    public static ResponseResult createBySuccess(String msg) {
+        return new ResponseResult(ResponseCode.SUCCESS.getCode(), msg);
     }
 
     public static <T> ResponseResult<T> createBySuccess(String msg, T data) {
@@ -68,19 +68,19 @@ public class ResponseResult<T> implements Serializable {
     /**
      * 错误的响应
      */
-    public static <T> ResponseResult<T> createByError() {
-        return new ResponseResult<>(ResponseCode.ERROR.getCode(), ResponseCode.ERROR.getDesc());
+    public static ResponseResult createByError() {
+        return new ResponseResult(ResponseCode.ERROR.getCode(), ResponseCode.ERROR.getDesc());
     }
 
-    public static <T> ResponseResult<T> createByError(String msg) {
-        return new ResponseResult<>(ResponseCode.ERROR.getCode(), msg);
+    public static ResponseResult createByError(String msg) {
+        return new ResponseResult(ResponseCode.ERROR.getCode(), msg);
     }
 
     public static <T> ResponseResult<T> createByError(T data) {
         return new ResponseResult<>(ResponseCode.ERROR.getCode(), data);
     }
 
-    public static <T> ResponseResult <T> createByError(Integer status, String msg) {
-        return new ResponseResult<>(status, msg);
+    public static ResponseResult createByError(Integer status, String msg) {
+        return new ResponseResult(status, msg);
     }
 }
