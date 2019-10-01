@@ -60,7 +60,7 @@ public class CategoryManagerController {
     }
 
     @PostMapping("/get_category")
-    public ResponseResult<List<Category>> getChildrenParallelCategory(HttpSession session,
+    public ResponseResult getChildrenParallelCategory(HttpSession session,
                                                                       @RequestParam(value = "categoryId", defaultValue = "0") Integer categoryId) {
         User user = (User) session.getAttribute(Const.CURRENT_USER);
         if (user == null) {
@@ -75,7 +75,7 @@ public class CategoryManagerController {
     }
 
     @PostMapping("/get_deep_category")
-    public ResponseResult<List<Integer>> getCategoryAndDeepChildrenCategory(HttpSession session,
+    public ResponseResult getCategoryAndDeepChildrenCategory(HttpSession session,
                                                                             @RequestParam(value = "categoryId", defaultValue = "0") Integer categoryId) {
         User user = (User) session.getAttribute(Const.CURRENT_USER);
         if (user == null) {

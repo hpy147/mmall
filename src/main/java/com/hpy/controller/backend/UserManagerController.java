@@ -23,11 +23,11 @@ public class UserManagerController {
     private UserService userService;
 
     @RequestMapping("/login")
-    public ResponseResult<User> login(String username, String password, HttpSession session) {
-        ResponseResult<User> responseResult = userService.login(username, password);
+    public ResponseResult login(String username, String password, HttpSession session) {
+        ResponseResult responseResult = userService.login(username, password);
         if (responseResult.isSuccess()) {
             // 用户名密码正确，判断是不是管理员
-            User user = responseResult.getData();
+            User user = (User) responseResult.getData();
             if (user.getRole() != Const.Role.ROLE_ADMIN) {
                 return ResponseResult.createByError("不是管理员，登陆失败");
             }

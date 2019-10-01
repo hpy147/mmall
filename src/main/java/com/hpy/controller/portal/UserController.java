@@ -27,8 +27,8 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/login")
-    public ResponseResult<User> login(String username, String password, HttpSession session) {
-        ResponseResult<User> responseResult = userService.login(username, password);
+    public ResponseResult login(String username, String password, HttpSession session) {
+        ResponseResult responseResult = userService.login(username, password);
         if (responseResult.isSuccess()) {
             // 登陆成功
             session.setAttribute(Const.CURRENT_USER, responseResult.getData());
@@ -53,7 +53,7 @@ public class UserController {
     }
 
     @PostMapping("/get_user_info")
-    public ResponseResult<User> getUserInfo(HttpSession session) {
+    public ResponseResult getUserInfo(HttpSession session) {
         User user = (User) session.getAttribute(Const.CURRENT_USER);
         if (user != null) {
             return ResponseResult.createBySuccess(user);
@@ -86,7 +86,7 @@ public class UserController {
     }
 
     @PostMapping("/update_information")
-    public ResponseResult<User> updateInformation(HttpSession session, User user) {
+    public ResponseResult updateInformation(HttpSession session, User user) {
         User currentUser = (User) session.getAttribute(Const.CURRENT_USER);
         if (currentUser == null) {
             return ResponseResult.createByError(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
@@ -94,17 +94,18 @@ public class UserController {
         // ID不允许更改
         user.setId(currentUser.getId());
 
-        ResponseResult<User> responseResult = userService.updateInformation(user);
+        ResponseResult responseResult = userService.updateInformation(user);
         if (responseResult.isSuccess()) {
             // 设置用户名，并将更新后的用户信息放入session
-            responseResult.getData().setUsername(currentUser.getUsername());
-            session.setAttribute(Const.CURRENT_USER, responseResult.getData());
+            User updateUser = (User) responseResult.getData();
+            updateUser.setUsername(currentUser.getUsername());
+            session.setAttribute(Const.CURRENT_USER, updateUser);
         }
         return responseResult;
     }
 
     @PostMapping("/get_information")
-    public ResponseResult<User> getInformation(HttpSession session) {
+    public ResponseResult getInformation(HttpSession session) {
         User currentUser = (User) session.getAttribute(Const.CURRENT_USER);
         if (currentUser == null) {
             return ResponseResult.createByError(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());

@@ -53,12 +53,12 @@ public class ResponseResult<T> implements Serializable {
         return new ResponseResult(ResponseCode.SUCCESS.getCode());
     }
 
-    public static <T> ResponseResult<T> createBySuccess(T data) {
-        return new ResponseResult<>(ResponseCode.SUCCESS.getCode(), data);
-    }
-
     public static ResponseResult createBySuccess(String msg) {
         return new ResponseResult(ResponseCode.SUCCESS.getCode(), msg);
+    }
+
+    public static <T> ResponseResult<T> createBySuccess(T data) {
+        return new ResponseResult<>(ResponseCode.SUCCESS.getCode(), data);
     }
 
     public static <T> ResponseResult<T> createBySuccess(String msg, T data) {
