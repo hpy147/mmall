@@ -158,4 +158,20 @@
       #{item}
     </foreach>
   </delete>
+  
+  <select id="selectByUserIdAndStatus" parameterType="map" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/>
+    from mmall_cart
+    where user_id = #{userId}
+      and checked = #{status}
+  </select>
+
+  <delete id="deleteByIds" parameterType="list">
+    delete from mmall_cart
+    where id in
+    <foreach collection="cartIds" item="item" index="index" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+  </delete>
+  
 </mapper>

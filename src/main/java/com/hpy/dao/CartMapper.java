@@ -1,5 +1,6 @@
 package com.hpy.dao;
 
+import com.hpy.common.Const;
 import com.hpy.pojo.Cart;
 import org.apache.ibatis.annotations.Param;
 
@@ -33,4 +34,9 @@ public interface CartMapper {
 
     void deleteByUserIdAndProductIds(@Param("userId") Integer userId,
                                      @Param("productIdsList") List<Integer> productIdsList);
+
+    List<Cart> selectByUserIdAndStatus(@Param("userId") Integer userId,
+                                       @Param("status") Integer status);
+
+    void deleteByIds(@Param("cartIds") List<Integer> cartIds);
 }

@@ -2,10 +2,22 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
-    <!-- 加载数据库配置文件 -->
-    <context:property-placeholder location="classpath:*.properties"/>
+    <!-- 加载属性文件，属性文件不能用*.properties加载，否则会报错，具体原因不明 -->
+    <!--<context:property-placeholder location="classpath:dataSource.properties, classpath:encrypt.properties"/>-->
+    <bean id="propertyConfigurer"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="order" value="2"/>
+        <property name="ignoreUnresolvablePlaceholders" value="true"/>
+        <property name="locations">
+            <list>
+                <value>classpath:dataSource.properties</value>
+                <value>classpath:encrypt.properties</value>
+            </list>
+        </property>
+        <property name="fileEncoding" value="utf-8"/>
+    </bean>
 
     <!-- 数据库连接池 -->
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
@@ -17,7 +29,7 @@
         <property name="initialSize" value="${jdbc.initialSize}"/>
         <!-- 最大活跃连接数 -->
         <property name="maxActive" value="${jdbc.maxActive}"/>
-        <!-- 最小空闲连接池 -->
+        <!-- 最小空闲连接数 -->
         <property name="minIdle" value="${jdbc.minIdle}"/>
         <!-- 最大等待时间 -->
         <property name="maxWait" value="${jdbc.maxWait}"/>

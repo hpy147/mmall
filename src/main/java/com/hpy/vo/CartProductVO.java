@@ -11,7 +11,7 @@ import java.math.BigDecimal;
  * Description: <描述>
  */
 @Getter@Setter
-public class CartProductVo {
+public class CartProductVO {
 
     // 商品ID
     private Integer productId;

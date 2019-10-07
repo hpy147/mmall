@@ -11,8 +11,8 @@ import com.hpy.pojo.Product;
 import com.hpy.service.CartService;
 import com.hpy.util.BigdecimalUtils;
 import com.hpy.util.PropertyUtils;
-import com.hpy.vo.CartProductVo;
-import com.hpy.vo.CartVo;
+import com.hpy.vo.CartProductVO;
+import com.hpy.vo.CartVO;
 import org.apache.shiro.util.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -82,7 +82,7 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public ResponseResult list(Integer userId) {
-        CartVo cartVo = this.assembleCartVo(userId);
+        CartVO cartVo = this.assembleCartVo(userId);
         return ResponseResult.createBySuccess(cartVo);
     }
 
@@ -126,23 +126,23 @@ public class CartServiceImpl implements CartService {
     }
 
     // 购物车核心方法
-    private CartVo assembleCartVo(Integer userId) {
+    private CartVO assembleCartVo(Integer userId) {
 
-        CartVo cartVo = new CartVo();
+        CartVO cartVo = new CartVO();
 
         // 根据用户ID获取购物车信息
         List<Cart> cartList = cartMapper.selectbyUserId(userId);
         // 购物车中被选中的商品总价
         BigDecimal cartTotalPrice = new BigDecimal("0");
 
-        List<CartProductVo> cartProductVoList = Lists.newArrayList();
+        List<CartProductVO> cartProductVoList = Lists.newArrayList();
 
         if (!CollectionUtils.isEmpty(cartList)) {
             // 将购物车的所有商品信息封装成CartProductVo
             for (Cart cartItem : cartList) {
                 // 如果商品数量为0，不在前台购物车中显示该商品详情
                 if (cartItem.getQuantity() > 0) {
-                    CartProductVo cartProductVo = new CartProductVo();
+                    CartProductVO cartProductVo = new CartProductVO();
                     cartProductVo.setProductId(cartItem.getProductId());
 
                     // 根据商品ID获取商品信息

@@ -12,10 +12,10 @@ import java.util.List;
  * Description: <描述>
  */
 @Getter@Setter
-public class CartVo {
+public class CartVO {
 
     // 购物车商品明细
-    private List<CartProductVo> cartProductVoList;
+    private List<CartProductVO> cartProductVoList;
     // 购物车被勾选的商品总价
     private BigDecimal cartTotalPrice;
     // 购物车所有商品是否被全选中

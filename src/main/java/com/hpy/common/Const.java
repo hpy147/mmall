@@ -53,4 +53,93 @@ public class Const {
         }
     }
 
+    public interface AlipayCallBack {
+        String TRADE_STATUS_WAIT_BUYER_PAY = "WAIT_BUYER_PAY";   // 交易创建
+        String TRADE_STATUS_TRADE_SUCCESS = "TRADE_SUCCESS";     // 支付成功
+        String TRADE_STATUS_TRADE_FINISHED = "TRADE_FINISHED";   // 交易完成
+        String TRADE_STATUS_TRADE_CLOSED = "TRADE_CLOSED";       // 交易关闭
+
+        String RESPONSE_SUCCESS = "success";
+        String RESPONSE_FAILED = "failed";
+    }
+
+    public enum OrderStatusEnum {
+        CANCELED(0, "已取消"),
+        NO_PAY(10, "未付款"),
+        PAID(20, "已付款"),
+        SHIPPED(40,"已发货"),
+        ORDER_SUCCESS(50,"订单完成"),
+        ORDER_CLOSE(60,"订单关闭")
+        ;
+        private Integer code;
+        private String desc;
+        private OrderStatusEnum(Integer code, String desc) {
+            this.code = code;
+            this.desc = desc;
+        }
+
+        public static OrderStatusEnum codeOf(Integer code) {
+            OrderStatusEnum[] values = OrderStatusEnum.values();
+            for (OrderStatusEnum orderStatusEnum : values) {
+                if (orderStatusEnum.getCode() == code) {
+                    return orderStatusEnum;
+                }
+            }
+            throw new RuntimeException("没有找到该枚举");
+        }
+
+        public Integer getCode() {
+            return code;
+        }
+        public String getDesc() {
+            return desc;
+        }
+    }
+
+    public enum PayPlatformEnum {
+        ALIPAY(1, "支付宝"),
+        WECHAT(2, "微信")
+        ;
+        private Integer code;
+        private String desc;
+        private PayPlatformEnum(Integer code, String desc) {
+            this.code = code;
+            this.desc = desc;
+        }
+        public Integer getCode() {
+            return code;
+        }
+        public String getDesc() {
+            return desc;
+        }
+    }
+
+    public enum PaymentTypeEnum {
+        ONLINE_PAY(1, "在线支付"),
+        ;
+        private Integer code;
+        private String desc;
+        private PaymentTypeEnum(Integer code, String desc) {
+            this.code = code;
+            this.desc = desc;
+        }
+
+        public static PaymentTypeEnum codeOf(Integer code) {
+            PaymentTypeEnum[] values = PaymentTypeEnum.values();
+            for (PaymentTypeEnum paymentTypeEnum : values) {
+                if (paymentTypeEnum.getCode() == code) {
+                    return paymentTypeEnum;
+                }
+            }
+            throw new RuntimeException("没有找到该枚举");
+        }
+
+        public Integer getCode() {
+            return code;
+        }
+        public String getDesc() {
+            return desc;
+        }
+    }
+
 }
